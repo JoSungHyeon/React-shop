@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Routes, Route, Link } from 'react-router-dom'
 import './App.css';
 import bg from './img/bg.png'
 import data from './data'
+import Detail from './Detail';
 
 function App() {
 
-  let [shoes, setShoes] = useState(data)
+  let [shoes] = useState(data)
 
   return (
     <div className="App">
@@ -20,19 +22,33 @@ function App() {
         </Container>
       </Navbar>
 
-      <div className='main-bg' style={{ backgroundImage: 'url(' + bg + ')' }}></div>
-      <div className='container'>
-        <div className='row'>
-          {/* <Card shoes={shoes[0]}></Card>
-          <Card shoes={shoes[1]}></Card>
-          <Card shoes={shoes[2]}></Card> */}
-          {shoes.map((a, i)=>{
-            return (
-              <Card shoes={shoes[i]} i={i}></Card>
-            )
-          })}
-        </div>
-      </div>
+      <Link to="/" style={{color: "inherit", marginRight: "50px", textDecoration: "none", border: "1px solid #111", padding: "2px 10px"}}>홈</Link>
+      <Link to="/detail" style={{color: "inherit", textDecoration: "none", border: "1px solid #111", padding: "2px 10px"}}>상세페이지</Link>
+
+      <Routes>
+        <Route path='/' element={
+          <>
+            <div className='main-bg' style={{ backgroundImage: 'url(' + bg + ')' }}></div>
+            <div className='container'>
+              <div className='row'>
+                {/* <Card shoes={shoes[0]}></Card>
+                <Card shoes={shoes[1]}></Card>
+                <Card shoes={shoes[2]}></Card> */}
+                {shoes.map((a, i)=>{
+                  return (
+                    <Card shoes={shoes[i]} i={i} key={a.id}></Card>
+                  )
+                })}
+              </div>
+            </div>
+          </>
+        } />
+        <Route path='/detail' element={
+          <Detail data={data} id={data.id}/>
+        } />
+      </Routes>
+
+
     </div>
   );
 }

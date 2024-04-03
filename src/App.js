@@ -1,29 +1,28 @@
 import { useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import './App.css';
 import bg from './img/bg.png'
 import data from './data'
-import Detail from './Detail';
+import Detail from './routes/Detail';
 
 function App() {
 
-  let [shoes] = useState(data)
+  let [shoes] = useState(data);
+
+  let navigate = useNavigate();
 
   return (
     <div className="App">
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">Shop</Navbar.Brand>
+          <Navbar.Brand onClick={()=>{ navigate("/") }}>Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">홈</Nav.Link>
-            <Nav.Link href="#pricing">장바구니</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate("/") }}>홈</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/detail') }}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-
-      <Link to="/" style={{color: "inherit", marginRight: "50px", textDecoration: "none", border: "1px solid #111", padding: "2px 10px"}}>홈</Link>
-      <Link to="/detail" style={{color: "inherit", textDecoration: "none", border: "1px solid #111", padding: "2px 10px"}}>상세페이지</Link>
 
       <Routes>
         <Route path='/' element={
@@ -43,9 +42,7 @@ function App() {
             </div>
           </>
         } />
-        <Route path='/detail' element={
-          <Detail data={data} id={data.id}/>
-        } />
+        <Route path='/detail/:id' element={<Detail shoes={shoes}/>} />
       </Routes>
 
 

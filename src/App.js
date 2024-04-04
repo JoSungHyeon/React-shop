@@ -5,10 +5,12 @@ import './App.css';
 import bg from './img/bg.png'
 import data from './data'
 import Detail from './routes/Detail';
+import axios from 'axios';
 
 function App() {
 
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
+  let [count, setCount] = useState(2);
 
   let navigate = useNavigate();
 
@@ -40,6 +42,29 @@ function App() {
                 })}
               </div>
             </div>
+            {
+              count != 4
+              ? <button onClick={()=>{
+                setCount(count + 1);
+                axios.get(`https://codingapple1.github.io/shop/data${count}.json`).then((result)=>{
+                  // setShoes(shoes.concat(result.data));
+                  let copy = [...shoes, ...result.data];
+                  setShoes(copy);
+                });
+                
+              }}>더보기</button>
+              : null
+            }
+            {/* <button onClick={()=>{
+              setCount(count + 1);
+              console.log(count)
+              axios.get(`https://codingapple1.github.io/shop/data${count}.json`).then((result)=>{
+                // setShoes(shoes.concat(result.data));
+                let copy = [...shoes, ...result.data];
+                setShoes(copy);
+              });
+              
+            }}>{count == 4 ? "더이상 상품이 없습니다" : "더보기"}</button> */}
           </>
         } />
         <Route path='/detail/:id' element={<Detail shoes={shoes}/>} />

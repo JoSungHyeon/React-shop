@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
+import { Context1 } from './../App.js'
+
 
 function Detail(props) {
+
+    let {재고} = useContext(Context1)
 
     let {id} = useParams();
     let myId = props.shoes.find((item)=>{return item.id == id})
     let [alert, setAlert] = useState(true)
     let [tab, setTab] = useState(0)
+    let [pageFade, setPageFade] = useState('');
 
     useEffect(()=>{
       // let a = setTimeout(()=>{setAlert(false)}, 2000);
+      setTimeout(()=>{ setPageFade('detail_end') }, 10);
       return () => {
          // clearTimeout(a);
+         setPageFade('');
       }
     }, []);
 
@@ -22,12 +29,14 @@ function Detail(props) {
     // useEffect(()=>{return ()=>{  }}, []) unmount시 1회 코드실행
 
     return (
-        <div className="container">
+        <div className={`container detail_start ${pageFade}`}>
             {
               alert == true 
               ? <div className="alert alert-warning">2초이내 구매시 할인</div>
               : null
             }
+
+            {재고}
             <div className="row">
               <div className="col-md-6">
                 <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
@@ -52,13 +61,13 @@ function Detail(props) {
               </Nav.Item>
             </Nav>
             
-            <TabContent tab={tab}/>
+            <TabContent tab={tab} shoes={props.shoes}/>
 
         </div> 
     )
 }
 
-function TabContent({tab}) {
+function TabContent({tab, shoes}) {
   // if(tab == 0) {
   //   return <div>내용0</div>
   // }
@@ -68,8 +77,22 @@ function TabContent({tab}) {
   // if(tab == 2) {
   //   return <div>내용2</div>
   // }
-  return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab] // 이러면 if문 필요없음
+  
+  let [fade, setFade] = useState('');
+  let {재고} = useContext(Context1);
+
+  useEffect(()=>{
+    setTimeout(()=>{ setFade('end') }, 10);
+    return () => {
+      setFade('')
+    }
+  }, [tab]);
+
+  return (<div className={`start ${fade}`}>
+    { [<div>{재고}</div>, <div>내용1</div>, <div>내용2</div>][tab] }
+  </div>)
 }
+
 
 
 export default Detail;

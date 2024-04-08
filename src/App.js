@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import './App.css';
 import bg from './img/bg.png'
 import data from './data'
 import Detail from './routes/Detail';
+import Cart from './routes/Cart';
 import axios from 'axios';
+
+export let Context1 = createContext()
 
 function App() {
 
   let [shoes, setShoes] = useState(data);
   let [count, setCount] = useState(2);
+  let [재고] = useState([10, 11, 12]);
 
   let navigate = useNavigate();
 
@@ -67,7 +71,13 @@ function App() {
             }}>{count == 4 ? "더이상 상품이 없습니다" : "더보기"}</button> */}
           </>
         } />
-        <Route path='/detail/:id' element={<Detail shoes={shoes}/>} />
+        <Route path='/detail/:id' element={
+          <Context1.Provider value={{ 재고 }}>
+            <Detail shoes={shoes} />
+          </Context1.Provider>
+        } />
+
+        <Route path='/cart' element={<Cart />}/>
       </Routes>
 
 

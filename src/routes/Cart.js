@@ -8,8 +8,6 @@ function Cart() {
     let state = useSelector((state)=>{ return state })
     let dispatch = useDispatch()
 
-    console.log(state.cart[1].id)
-
     return (
         <div>
 
@@ -34,7 +32,7 @@ function Cart() {
                                 <td>{state.cart[i].count}</td>
                                 <td>
                                     <button onClick={()=>{
-                                        dispatch(addCount(i))
+                                        dispatch(addCount(state.cart[i].id))
                                     }}>+</button>
                                 </td>
                             </tr>
@@ -46,7 +44,4 @@ function Cart() {
     )
 }
 
-
-// 버튼누르면 수량 +되게
-// 디테일 페이지에서 주문하기 버튼 누르면 장바구니에 상품 추가하기
 export default Cart;

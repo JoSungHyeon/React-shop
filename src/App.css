@@ -23,6 +23,26 @@
   background-position: center;
 }
 
+.recent {
+  color: #fff;
+  width: 150px;
+  height: 300px;
+  position: fixed;
+  text-align: center;
+  top: 20px;
+  right: 20px;
+  background-color: #777;
+}
+
+.recent h5 {
+  background-color: #111;
+  padding: 10px;
+}
+
+.recent div {
+  cursor: pointer;
+  margin: 10px 0;
+}
 .App {
   text-align: center;
 }

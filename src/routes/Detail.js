@@ -7,8 +7,6 @@ import { useDispatch } from "react-redux";
 
 function Detail(props) {
 
-    let {재고} = useContext(Context1)
-
     let {id} = useParams();
     let myId = props.shoes.find((item)=>{return item.id == id})
     let [alert, setAlert] = useState(true)
@@ -48,8 +46,6 @@ function Detail(props) {
               ? <div className="alert alert-warning">2초이내 구매시 할인</div>
               : null
             }
-
-            {재고}
             <div className="row">
               <div className="col-md-6">
                 <img src={`https://codingapple1.github.io/shop/shoes${Number(id) + 1}.jpg`}width="100%" />
@@ -94,7 +90,6 @@ function TabContent({tab, shoes}) {
   // }
   
   let [fade, setFade] = useState('');
-  let {재고} = useContext(Context1);
 
   useEffect(()=>{
     setTimeout(()=>{ setFade('end') }, 10);
@@ -104,7 +99,7 @@ function TabContent({tab, shoes}) {
   }, [tab]);
 
   return (<div className={`start ${fade}`}>
-    { [<div>{재고}</div>, <div>내용1</div>, <div>내용2</div>][tab] }
+    { [<div>내용1</div>, <div>내용2</div>][tab] }
   </div>)
 }
 

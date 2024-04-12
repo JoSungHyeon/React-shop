@@ -26,7 +26,7 @@ function App() {
   let [재고] = useState([10, 11, 12]);
 
   let result = useQuery('작명', ()=>
-    axios.get('https://codingapple1.github.io/userdata123.json').then((a)=>{
+    axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{
       console.log("요청됨")
       return a.data
     })
@@ -110,9 +110,7 @@ function App() {
           </>
         } />
         <Route path='/detail/:id' element={
-          <Context1.Provider value={{ 재고 }}>
             <Detail shoes={shoes} />
-          </Context1.Provider>
         } />
 
         <Route path='/cart' element={<Cart />}/>

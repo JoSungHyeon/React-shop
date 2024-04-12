@@ -1,3 +1,4 @@
+import { memo, useMemo, useState } from "react";
 import { Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, increase } from "./../store/userSlice";
@@ -6,11 +7,11 @@ import { addCount } from "./../store/cartSlice";
 function Cart() {
 
     let state = useSelector((state)=>{ return state })
-    let dispatch = useDispatch()
+    let dispatch = useDispatch();
+    let [count, setCount] = useState(0)
 
     return (
         <div>
-
             <h6>{state.user.name} {state.user.age}의 장바구니</h6>
             <button onClick={()=>{ dispatch(increase(1)) }}>버튼</button>
 
